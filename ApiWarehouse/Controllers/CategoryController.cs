@@ -47,7 +47,7 @@ namespace WareHouse.Controllers
         {
             Guid? deletedCategoryId = await repository.DeleteCategoryAsync(deleteCategoryId);
 
-            if (deletedCategoryId == null) return NotFound();
+            if (deletedCategoryId is null) return NotFound();
 
             await redis.cache.RemoveAsync("categories");
 
@@ -59,7 +59,7 @@ namespace WareHouse.Controllers
         {
             Guid? updatedCategoryId = await repository.UpdateCategoryAsync(updateCategoryDto);
 
-            if (updatedCategoryId == null) return NotFound();
+            if (updatedCategoryId is null) return NotFound();
 
             await redis.cache.RemoveAsync("categories");
 

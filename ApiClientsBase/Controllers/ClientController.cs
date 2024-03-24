@@ -29,12 +29,12 @@ namespace ProductsMicroservice.Controllers
         [HttpGet(template: "GetClients")]
         public async Task<ActionResult<IEnumerable<ClientDto>?>> GetClients()
         {
-            if (cache.TryGetValue("clients", out List<ClientDto>? clientsCache) && clientsCache != null)
+            if (cache.TryGetValue("clients", out List<ClientDto>? clientsCache) && clientsCache is not null)
                 return AcceptedAtAction(nameof(GetClients), clientsCache);
 
             IEnumerable<ClientDto>? allProductsDtos =  await repository.GetClientsAsync();
 
-            if (allProductsDtos != null)
+            if (allProductsDtos is not null)
                 cache.Set("clients", allProductsDtos, TimeSpan.FromMinutes(30));
 
             return AcceptedAtAction(nameof(GetClients), allProductsDtos);

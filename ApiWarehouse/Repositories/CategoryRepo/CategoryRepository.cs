@@ -41,7 +41,7 @@ namespace WareHouse.Repositories.CategoryRepo
             {
                 Category? existingCategory = await context.Categories.FirstOrDefaultAsync(ec => ec.Name == categoryDto.Name);
 
-                if (existingCategory != null) return existingCategory.Id;
+                if (existingCategory is not null) return existingCategory.Id;
 
                 Category newCategory = mapper.Map<Category>(categoryDto);
                 context.Categories.Add(newCategory);

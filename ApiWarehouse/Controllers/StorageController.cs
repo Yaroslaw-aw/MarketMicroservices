@@ -46,7 +46,7 @@ namespace WareHouse.Controllers
         {
             Guid? deletedStorageId = await repository.DeleteStorageAsync(deleteStorageId);
 
-            if (deletedStorageId == null) return NotFound();
+            if (deletedStorageId is null) return NotFound();
 
             await redis.cache.RemoveAsync("storages");
 
@@ -58,7 +58,7 @@ namespace WareHouse.Controllers
         {
             Guid? updatedStorageId = await repository.UpdateStorageAsync(updateStorageDto);
 
-            if (updatedStorageId == null) return NotFound();
+            if (updatedStorageId is null) return NotFound();
 
             await redis.cache.RemoveAsync("storages");
 

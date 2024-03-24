@@ -41,7 +41,7 @@ namespace WareHouse.Controllers
         {
             Guid? newProductId = await repository.AddProductAsync(productDto);
 
-            if (newProductId == null) return BadRequest("One field is null!");
+            if (newProductId is null) return BadRequest("One field is null!");
 
             await redis.cache.RemoveAsync("products");
 
@@ -53,7 +53,7 @@ namespace WareHouse.Controllers
         {
             Guid? deletedProductId = await repository.DeleteProductAsync(deleteProductId);
 
-            if (deletedProductId == null) return NotFound();
+            if (deletedProductId is null) return NotFound();
 
             await redis.cache.RemoveAsync("products");
 
@@ -65,7 +65,7 @@ namespace WareHouse.Controllers
         {
             Guid? updatedProductId = await repository.UpdateProductAsync(updateProductDto);
 
-            if (updatedProductId == null) return NotFound();
+            if (updatedProductId is null) return NotFound();
 
             await redis.cache.RemoveAsync("products");
 
@@ -86,7 +86,7 @@ namespace WareHouse.Controllers
         public async Task<ActionResult<Guid?>> AddCategoryToProduct(AddCategotyToProductDto categotyToProductDto)
         {
             Guid? addedCategory = await repository.AddCategoryToProductAsync(categotyToProductDto);
-            if (addedCategory == null) return StatusCode(409);
+            if (addedCategory is null) return StatusCode(409);
             await redis.cache.RemoveAsync("products");
             return CreatedAtAction(nameof(AddCategoryToProduct), addedCategory);
         }
@@ -95,7 +95,7 @@ namespace WareHouse.Controllers
         {            
             StringBuilder sb = new StringBuilder();
 
-            if (products != null)
+            if (products is not null)
                 foreach (var line in products)
                 {
                     sb.AppendLine(line.Name + ";" +

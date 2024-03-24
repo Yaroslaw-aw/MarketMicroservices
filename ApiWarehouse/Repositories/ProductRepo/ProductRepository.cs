@@ -11,13 +11,11 @@ namespace WareHouse.Repositories.ProductRepo
     {
         private readonly WareHouseContext context;
         private readonly IMapper mapper;
-        private readonly Redis redis;
 
         public ProductRepository(WareHouseContext context, IMapper mapper, Redis redis)
         {
             this.context = context;
             this.mapper = mapper;
-            this.redis = redis;
         }
 
         public async Task<IEnumerable<GetProductDto>> GetAllProductsAsync()
@@ -57,7 +55,7 @@ namespace WareHouse.Repositories.ProductRepo
 
         public async Task<Guid?> AddProductAsync(ProductDto productDto)
         {
-            if (productDto?.StorageId == null || productDto?.CategoryId == null) return null;
+            if (productDto?.StorageId is null || productDto?.CategoryId is null) return null;
 
             Guid? newProductId = null;
             try
@@ -75,7 +73,7 @@ namespace WareHouse.Repositories.ProductRepo
                     Product? existingProduct = await context.Products.FirstOrDefaultAsync(ep => ep.Name == productDto.Name &&
                                                                                                 ep.Description == productDto.Description);
 
-                    if (existingProduct != null)
+                    if (existingProduct is not null)
                     {
                         return existingProduct.Id;
                     }
@@ -142,6 +140,7 @@ namespace WareHouse.Repositories.ProductRepo
 
                 Category? addedCategory = await context.Categories.FirstOrDefaultAsync(cat => cat.Id == categotyToProductDto.CategoryId);
                 if (addedCategory is null) return null;
+
                 updatedProduct.Categories.Add(addedCategory);
 
                 context.SaveChanges();
