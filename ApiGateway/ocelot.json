@@ -1,0 +1,108 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/Client/{method}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "clienthost",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/Client/{method}",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "SwaggerKey": "clients"
+    },
+    {
+      "DownstreamPathTemplate": "/Product/{method}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "warehousehost",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/Product/{method}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "SwaggerKey": "products"
+    },
+    {
+      "DownstreamPathTemplate": "/Category/{method}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "warehousehost",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/Category/{method}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "SwaggerKey": "products"
+    },
+    {
+      "DownstreamPathTemplate": "/Storage/{method}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "warehousehost",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/Storage/{method}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "SwaggerKey": "products"
+    },
+    {
+      "DownstreamPathTemplate": "/ClientProducts/{method}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "apimarket",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/ClientProducts/{method}",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "SwaggerKey": "market"
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://apigatewayhost:6696"
+  },
+
+  "SwaggerEndPoints": [
+    {
+      "Key": "clients",
+      "TransformByOcelotConfig": false,
+      "Config": [
+        {
+          "Name": "Client API",
+          "Version": "v1",
+          "Url": "http://clienthost:8080/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "products",
+      "TransformByOcelotConfig": false,
+      "Config": [
+        {
+          "Name": "Products API",
+          "Version": "v1",
+          "Url": "http://warehousehost:8080/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "clientProducts",
+      "TransformByOcelotConfig": false,
+      "Config": [
+        {
+          "Name": "ClientProducts API",
+          "Version": "v1",
+          "Url": "http://apimarket:8080/swagger/v1/swagger.json"
+        }
+      ]
+    }
+  ]
+}
