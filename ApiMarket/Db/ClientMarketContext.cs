@@ -15,7 +15,6 @@ namespace ApiClientMarket.Db
         {
             modelBuilder.Entity<ClientProduct>(entity =>
             {
-                //entity.HasNoKey();
                 entity.HasKey(p => p.Id).HasName("order_pkey");
                 entity.ToTable("client_products");
 

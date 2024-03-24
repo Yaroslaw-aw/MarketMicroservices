@@ -22,20 +22,20 @@ namespace ProductsMicroservice.Controllers
         public async Task<ActionResult<Guid?>> AddClient(ClientDto productsDto)
         {
             Guid? newProductId = await repository.AddClientAsync(productsDto);
-            cache.Remove("products");
+            cache.Remove("clients");
             return CreatedAtAction(nameof(AddClient), newProductId);
         }
 
         [HttpGet(template: "GetClients")]
         public async Task<ActionResult<IEnumerable<ClientDto>?>> GetClients()
         {
-            if (cache.TryGetValue("products", out List<ClientDto>? productsCache) && productsCache != null)
-                return AcceptedAtAction(nameof(GetClients), productsCache);
+            if (cache.TryGetValue("clients", out List<ClientDto>? clientsCache) && clientsCache != null)
+                return AcceptedAtAction(nameof(GetClients), clientsCache);
 
             IEnumerable<ClientDto>? allProductsDtos =  await repository.GetClientsAsync();
 
             if (allProductsDtos != null)
-                cache.Set("products", allProductsDtos, TimeSpan.FromMinutes(30));
+                cache.Set("clients", allProductsDtos, TimeSpan.FromMinutes(30));
 
             return AcceptedAtAction(nameof(GetClients), allProductsDtos);
         }

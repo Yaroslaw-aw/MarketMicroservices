@@ -24,7 +24,7 @@ namespace WareHouse.Models
             modelBuilder.Entity<Product>(entity =>
             {
                 entity.ToTable("products");
-                
+
                 entity.HasKey(product => product.Id).HasName("product_pkey");
 
                 entity.Property(product => product.Id)
@@ -38,16 +38,6 @@ namespace WareHouse.Models
                 entity.Property(product => product.Description)
                 .HasColumnName("description")
                 .IsRequired();
-
-                /*
-                //entity
-                //     .HasMany(product => product.Categories)
-                //     .WithMany(category => category.Products);
-
-                //entity
-                //      .HasMany(product => product.Storages)
-                //      .WithMany(storage => storage.Products);   
-                */
             });
 
             modelBuilder.Entity<ProductDetails>(entity =>
@@ -123,153 +113,7 @@ namespace WareHouse.Models
                                 .HasForeignKey(storageProduct => storageProduct.StorageId));
             });
             OnModelCreatingPartial(modelBuilder);
-            //base.OnModelCreating(modelBuilder);
         }
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
-        //modelBuilder.Entity<ProductCategory>(entity =>
-        //{
-        //    entity.HasKey(pc => new { pc.ProductId, pc.CategoryId });
-        //    entity.ToTable("ProductCategory");
-
-        //    entity.HasOne(pc => pc.Category)
-        //          .WithMany()
-        //          .HasForeignKey(pc => pc.CategoryId);
-        //});
-
-        // Определение таблицы и свойств для связи между продуктами и складами
-        //modelBuilder.Entity<ProductStorage>(entity =>
-        //{
-        //    entity.HasKey(ps => new { ps.ProductId, ps.StorageId });
-        //    entity.ToTable("ProductStorage");
-
-        //    entity.HasOne(ps => ps.Storage)
-        //          .WithMany(s => s.ProductStorages)
-        //          .HasForeignKey(ps => ps.StorageId);
-        //});
-
-
-        //    OnModelCreatingPartial(modelBuilder);
-        //}
-        //partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
-    
-
-        public void ValidateDbSets()
-        {
-            Console.WriteLine("Validating DbSet configurations...");
-
-            // Проверка Products
-            Console.WriteLine($"Products DbSet configured: {Products != null}");
-            if (Products != null)
-            {
-                Console.WriteLine($"Products DbSet entity type: {Products.EntityType}");
-            }
-
-            // Проверка Categories
-            Console.WriteLine($"Categories DbSet configured: {Categories != null}");
-            if (Categories != null)
-            {
-                Console.WriteLine($"Categories DbSet entity type: {Categories.EntityType}");
-            }
-
-            // Проверка Storages
-            Console.WriteLine($"Storages DbSet configured: {Storages != null}");
-            if (Storages != null)
-            {
-                Console.WriteLine($"Storages DbSet entity type: {Storages.EntityType}");
-            }
-
-            // Проверка ProductCategories
-            //Console.WriteLine($"ProductCategories DbSet configured: {ProductCategories != null}");
-            //if (ProductCategories != null)
-            //{
-            //    Console.WriteLine($"ProductCategories DbSet entity type: {ProductCategories.EntityType}");
-            //}
-
-            // Проверка ProductStorages
-            //Console.WriteLine($"ProductStorages DbSet configured: {ProductStorages != null}");
-            //if (ProductStorages != null)
-            //{
-            //    Console.WriteLine($"ProductStorages DbSet entity type: {ProductStorages.EntityType}");
-            //}
-        }
     }
 }
-
-//entity.HasMany(product => product.Categories)
-//      .WithMany(category => category.Products)
-//      .UsingEntity<ProductCategory>(
-//          j =>
-//          {
-//              j.ToTable("ProductCategory"); // Название таблицы связей
-//              j.HasOne(typeof(Category)).WithMany().HasForeignKey("CategoryId"); // Свойство Category
-//              j.HasOne(typeof(Product)).WithMany().HasForeignKey("ProductId");   // Свойство Product
-//              j.HasKey("ProductId", "CategoryId"); // Композитный ключ
-//              j.HasIndex("ProductId", "CategoryId").IsUnique(); // Уникальный индекс
-//          });
-
-//entity.HasMany(product => product.Storages)
-//      .WithMany(storage => storage.Products)
-//      .UsingEntity<ProductStorage>(
-//          j =>
-//          {
-//              j.ToTable("ProductCategory"); // Название таблицы связей
-//              j.HasOne(typeof(Storage)).WithMany().HasForeignKey("StorageId"); // Свойство Storage
-//              j.HasOne(typeof(Product)).WithMany().HasForeignKey("ProductId"); // Свойство Product
-//              j.HasKey("ProductId", "StorageId"); // Композитный ключ
-//              j.HasIndex("ProductId", "StorageId").IsUnique(); // Уникальный индекс
-//          });
-
-
-//public DbSet<ProductCategory> ProductCategories { get; set; }
-//public DbSet<ProductStorage> ProductStorages { get; set; }
-
-
-
-
-
-
-//modelBuilder.Entity<ProductCategory>(entity =>
-//{
-//    entity.HasNoKey();
-
-//    entity.Property(e => e.CategoryId)
-//          .HasColumnName("category_id")
-//          .IsRequired();
-
-//    entity.Property(e => e.ProductId)
-//          .HasColumnName("product_id")
-//          .IsRequired();
-
-
-//});
-
-//modelBuilder.Entity<ProductStorage>(entity =>
-//{
-//    entity.HasNoKey();
-
-//    entity.Property(e => e.StorageId)
-//          .HasColumnName("storage_id")
-//          .IsRequired();
-
-//    entity.Property(e => e.ProductId)
-//          .HasColumnName("product_id")
-//          .IsRequired();
-
-//    entity.Property(e => e.Price)
-//          .HasColumnName("price")
-//          .IsRequired();
-
-//    entity.Property(e => e.Count)
-//          .HasColumnName("count")
-//          .IsRequired();
-
-//    entity.Property(e => e.Name)
-//          .HasColumnName("name")
-//          .IsRequired();
-
-//    entity.Property(e => e.Description)
-//          .HasColumnName("descriprion")
-//          .IsRequired();
-//});

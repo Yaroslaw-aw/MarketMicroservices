@@ -22,7 +22,6 @@ namespace WareHouse.Mapping
             CreateMap<Storage, GetStorageDto>().ReverseMap();
             CreateMap<Storage, UpdateStorageDto>().ReverseMap();
 
-            //CreateMap<ProductCategory, AddCategotyToProductDto>().ReverseMap();
         }
     }
 }

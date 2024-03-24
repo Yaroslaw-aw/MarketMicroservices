@@ -2,7 +2,6 @@
 
 namespace ProductsMicroservice.Db
 {
-    // "Host=localhost;Username=postgres;Password=example;Database=MarketProducts"
     public partial class AppDbContext : DbContext
     {
         public string? connectionString;

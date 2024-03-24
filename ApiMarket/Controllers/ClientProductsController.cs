@@ -27,8 +27,6 @@ namespace ApiClientMarket.Controllers
             Task<bool> clientExistTask = new MarketClient().ClientExistsAsync(order.ClientId);
             Task<bool> productExistTask = new MarketProductsClient().ProductExistsAsync(order.ProductId);
 
-            //await Task.WhenAll(clientExistTask, productExistTask);
-
             bool clientExists = await clientExistTask;
             bool productExists = await productExistTask;
 
@@ -57,22 +55,11 @@ namespace ApiClientMarket.Controllers
             }
         }
 
-
-
-        //[HttpPost(template: "BuyProduct")]
-        //public async Task<ActionResult<Guid?>> BuyProduct(ClientProductDto productDto)
-        //{
-        //    Guid? boughtProduct = await repository.BuyProductAsync(productDto);
-        //    cache.Remove("products");
-        //    return CreatedAtAction(nameof(BuyProduct), boughtProduct);
-        //}
-
-
         [HttpDelete(template: "ReturnProduct")]
         public async Task<ActionResult<Guid?>> ReturnProduct(Guid returnProductId)
         {
             Guid? returnedProduct = await repository.ReturnProductAsync(returnProductId);
-            cache.Remove("products");
+            cache.Remove("boughtproducts");
             return AcceptedAtAction(nameof(ReturnProduct), returnedProduct);
         }
 
@@ -80,12 +67,12 @@ namespace ApiClientMarket.Controllers
         [HttpGet(template: "ListProducts")]
         public async Task<ActionResult<IEnumerable<Guid?>?>> ListProducts(Guid clientId)
         {
-            if (cache.TryGetValue("products", out List<Guid>? productsGuidsCache) && productsGuidsCache != null)
+            if (cache.TryGetValue("boughtproducts", out List<Guid>? productsGuidsCache) && productsGuidsCache != null)
                 return AcceptedAtAction(nameof(ListProducts), clientId, productsGuidsCache);
 
             IEnumerable<Guid?>? productsGuids = await repository.ListProductsAsync(clientId);
 
-            cache.Set("products", productsGuids, TimeSpan.FromMinutes(30));
+            cache.Set("boughtproducts", productsGuids, TimeSpan.FromMinutes(30));
 
             return AcceptedAtAction(nameof(ListProducts), productsGuids);
         }

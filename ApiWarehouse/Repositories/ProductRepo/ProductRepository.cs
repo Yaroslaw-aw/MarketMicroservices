@@ -65,11 +65,11 @@ namespace WareHouse.Repositories.ProductRepo
                 using (context)
                 {
                     #region Проверки
-                    Category? newCategory = context.Categories.FirstOrDefault(nc => nc.Id == productDto.CategoryId);
-                    if (newCategory == null) return null;
-
                     Storage? newStorage = context.Storages.FirstOrDefault(nc => nc.Id == productDto.StorageId);
                     if (newStorage == null) return null;
+
+                    Category? newCategory = context.Categories.FirstOrDefault(nc => nc.Id == productDto.CategoryId);
+                    if (newCategory == null) return null;
                     #endregion
 
                     Product? existingProduct = await context.Products.FirstOrDefaultAsync(ep => ep.Name == productDto.Name &&
@@ -148,11 +148,5 @@ namespace WareHouse.Repositories.ProductRepo
                 return addedCategory.Id;
             }
         }
-
-
-
-
-
-
     }
 }
