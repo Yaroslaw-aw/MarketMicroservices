@@ -54,7 +54,7 @@ namespace WareHouse.Repositories.CategoryRepo
             using(context)
             {
                 Category? existingCategory = await context.Categories.FirstOrDefaultAsync(ec => ec.Id == categoryId);
-                if (existingCategory == null) return null;
+                if (existingCategory is null) return null;
                 context.Remove(existingCategory);
                 context.SaveChanges();
                 return existingCategory.Id;
@@ -66,7 +66,7 @@ namespace WareHouse.Repositories.CategoryRepo
             using (context)
             {
                 Category? existingCategory = await context.Categories.FirstOrDefaultAsync(ec => ec.Id == updateCategoryDto.Id);
-                if (existingCategory == null) return null;
+                if (existingCategory is null) return null;
                 mapper.Map(updateCategoryDto, existingCategory);
                 context.SaveChanges();
                 return existingCategory.Id;

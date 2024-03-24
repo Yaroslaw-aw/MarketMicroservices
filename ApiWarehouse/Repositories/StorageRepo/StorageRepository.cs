@@ -43,7 +43,7 @@ namespace WareHouse.Repositories.StorageRepo
 
                 if (existingStorage != null) return existingStorage.Id;
 
-                Storage newStorage = /*new Storage() { Name = storageDto.Name, Description = storageDto.Description };*/mapper.Map<Storage>(storageDto);
+                Storage newStorage = mapper.Map<Storage>(storageDto);
                 context.Storages.Add(newStorage);
                 await context.SaveChangesAsync();
                 return newStorage.Id;
@@ -55,7 +55,7 @@ namespace WareHouse.Repositories.StorageRepo
             using (context)
             {
                 Storage? existingStorage = await context.Storages.FirstOrDefaultAsync(ec => ec.Id == deleteStorageId);
-                if (existingStorage == null) return null;
+                if (existingStorage is null) return null;
                 context.Remove(existingStorage);
                 await context.SaveChangesAsync();
                 return existingStorage.Id;
@@ -68,7 +68,7 @@ namespace WareHouse.Repositories.StorageRepo
             using (context)
             {
                 Storage? existingStorage = await context.Storages.FirstOrDefaultAsync(ec => ec.Id == updateStorageDto.Id);
-                if (existingStorage == null) return null;
+                if (existingStorage is null) return null;
                 mapper.Map(updateStorageDto, existingStorage);
                 context.SaveChanges();
                 return existingStorage.Id;

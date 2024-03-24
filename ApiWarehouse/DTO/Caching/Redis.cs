@@ -28,7 +28,7 @@ namespace Market.DTO.Caching
         public bool TryGetValue<T>(string key, out T? value)
         {
             T? data = GetData<T>(key);
-            if (data == null)
+            if (data is null)
             {
                 value = default;
                 return false;

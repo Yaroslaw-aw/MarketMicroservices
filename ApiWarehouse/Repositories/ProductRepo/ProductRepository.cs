@@ -49,7 +49,7 @@ namespace WareHouse.Repositories.ProductRepo
                 existingProduct = await context.Products.FirstOrDefaultAsync(product => product.Id == productId);
             }
 
-            if (existingProduct == null)
+            if (existingProduct is null)
                 return false;
             else
                 return true;
@@ -66,10 +66,10 @@ namespace WareHouse.Repositories.ProductRepo
                 {
                     #region Проверки
                     Storage? newStorage = context.Storages.FirstOrDefault(nc => nc.Id == productDto.StorageId);
-                    if (newStorage == null) return null;
+                    if (newStorage is null) return null;
 
                     Category? newCategory = context.Categories.FirstOrDefault(nc => nc.Id == productDto.CategoryId);
-                    if (newCategory == null) return null;
+                    if (newCategory is null) return null;
                     #endregion
 
                     Product? existingProduct = await context.Products.FirstOrDefaultAsync(ep => ep.Name == productDto.Name &&
@@ -107,7 +107,7 @@ namespace WareHouse.Repositories.ProductRepo
             {
                 Product? deletedProduct = await context.Products.FirstOrDefaultAsync(dp => dp.Id == productId);
 
-                if (deletedProduct == null) return null;
+                if (deletedProduct is null) return null;
 
                 context.Products.Remove(deletedProduct);
 
@@ -123,7 +123,7 @@ namespace WareHouse.Repositories.ProductRepo
             {
                 Product? updateProduct = await context.Products.FirstOrDefaultAsync(up => up.Id == updateProductDto.ProductId);
 
-                if (updateProduct == null) return null;
+                if (updateProduct is null) return null;
 
                 mapper.Map(updateProductDto, updateProduct);
 
@@ -138,10 +138,10 @@ namespace WareHouse.Repositories.ProductRepo
             using (context)
             {
                 Product? updatedProduct = await context.Products.FirstOrDefaultAsync(p => p.Id == categotyToProductDto.ProductId);
-                if (updatedProduct == null) return null;
+                if (updatedProduct is null) return null;
 
                 Category? addedCategory = await context.Categories.FirstOrDefaultAsync(cat => cat.Id == categotyToProductDto.CategoryId);
-                if (addedCategory == null) return null;
+                if (addedCategory is null) return null;
                 updatedProduct.Categories.Add(addedCategory);
 
                 context.SaveChanges();

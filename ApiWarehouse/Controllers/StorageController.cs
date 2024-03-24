@@ -10,13 +10,11 @@ namespace WareHouse.Controllers
     public class StorageController : Controller
     {
         private readonly IStorageRepository repository;
-        //private readonly ILogger logger;
         private readonly Redis redis;
 
-        public StorageController(IStorageRepository repository, /*ILogger logger,*/ Redis redis)
+        public StorageController(IStorageRepository repository, Redis redis)
         {
             this.repository = repository;
-            //this.logger = logger;
             this.redis = redis;
         }
 
